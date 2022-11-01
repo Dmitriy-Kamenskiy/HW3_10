@@ -10,7 +10,19 @@ public class Main {
 
             System.out.println(personList);
 
-            Collections.sort(personList, new PersonNobilityComparator(2));
+            Comparator<Person> comparator = (o1, o2)-> {
+                int result = 0;
+                int numWords1 = o1.getSurname().split("\\P{IsAlphabetic}+",2).length;
+                int numWords2 = o2.getSurname().split("\\P{IsAlphabetic}+",2).length;
+
+                result = Integer.compare(numWords1, numWords2);
+                if (result == 0){
+                    result = Integer.compare(o1.getAge(), o2.getAge());
+                }
+                return result;
+            };
+
+            Collections.sort(personList,comparator);
 
             System.out.println(personList);
     }
